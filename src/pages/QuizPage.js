@@ -19,9 +19,6 @@ export default function Quispage(){
     return(<main className="container bg-light">
         <button className="btn btn-primary my-5" onClick={getQuestions}>get questions</button>
         
-        <ul>
-       
-        </ul>
         <Questions  setUseranslist = {setUserAnswerList}
                     result = {questions[currentQuestion]}
                      setnextquestion = {setcurrentQuestion}
