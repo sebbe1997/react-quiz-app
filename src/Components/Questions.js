@@ -10,6 +10,7 @@ export default function Questions(props){
     }
     function OnClickNext(e)
     {
+       
         e.preventDefault();
         const value = e.target.value;
         props.setUseranslist(value);
@@ -27,8 +28,8 @@ export default function Questions(props){
             </ul>)} */}
             <h3>{questions.question}</h3>
             {answers.map((iq,idx) =>
-             <li onClick={OnClickNext} key={idx} className="row card">{iq}
-             
+             <li onClick={OnClickNext} style={{cursor: 'pointer'}} id={`question`} key={idx} className="row card">
+                {iq}
              </li>)}
             
     </div>)
