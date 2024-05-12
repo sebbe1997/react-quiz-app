@@ -1,28 +1,46 @@
 
 import { useState } from "react";
-import { FormSelect,FormLabel,Form,Button, FormGroup,Control} from "react-bootstrap";
-export default function SettingsForm(props){
-    const {categoryArray,setcategoryArray} = useState([]);
-    function OnSave(e) {
-        e.preventDefault();
-        const settings = {}
+import { FormSelect,FormLabel,Form,Button, FormGroup, Modal} from "react-bootstrap";
+
+export default function SettingsForm(props){ 
+    //TODO figure out why all form values get into the url look up event lifting again and 
+    // using bootstrap modals with forms.
+    const categories = props.categories || [];
+    function onsubmit(e){
+        props.setShow(false);
+        const settings ={};
         settings.category = document.getElementById("category").value;
-        props.OnSave(e);
+        settings.questionAmount = document.getElementById("questionAmount").value;
+        e.settings = settings;
+        
+        props.onplayclick(e);
     }
-    return (<Form className="text-center">
-            <FormGroup>
-            <FormLabel htmlFor="questionsamount " className="form-label">Amount of questions </FormLabel>
-            <Form.Control type="number" min={1} max={10} defaultValue={5}/>
-            <FormLabel className="form-label">Category</FormLabel>
-            <FormSelect className="form-control" name="category" id="category" >
-                <option>Open this select menu</option>
-                <option value="General Knowledge">General Knowledge</option>
-                <option value="Entertainment: Music">Entertainment: Music</option>
-                <option value="Science: Computers">Science: Computers</option>
-            </FormSelect>
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-            </FormGroup>
-        </Form>)
+    const oncancel = () => {props.setShow(false);}
+   
+    return (<Modal show = {props.show}>
+            <Form className="text-center">
+                <Modal.Header>
+                <Modal.Title>Settings</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <FormGroup >
+                        <FormLabel htmlFor="questionsamount " className="form-label">Amount of questions </FormLabel>
+                        <Form.Control type="number"  id="questionAmount" min={1} max={10} defaultValue={5}/>
+                        <FormLabel className="form-label">Category</FormLabel>
+                        <FormSelect className="form-control" name="category" id="category" >
+                            
+                            {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                        </FormSelect>
+                    </FormGroup>
+                </Modal.Body>
+                   <Modal.Footer>
+                    <Button variant="secondary" type="submit" onclick = {oncancel}>
+                        cancel
+                    </Button>
+                    <Button variant="primary" type="submit" onClick={onsubmit}>
+                        Submit
+                    </Button>
+                    </Modal.Footer>
+        </Form>
+        </Modal>)
 }

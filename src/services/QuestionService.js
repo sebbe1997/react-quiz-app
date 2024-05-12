@@ -13,6 +13,7 @@ export class QuestionService{
             let response = await fetch(Url); 
             if(response.ok){
                 console.log("Request was succesfully sent.");
+                console.log(Url);
                 let data = response.json();
                 return data;
             }else{

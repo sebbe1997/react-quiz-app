@@ -3,7 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 
 export default function NavMenu(){
-    return (<Navbar bg="primary" expand="lg">
+    return (<Navbar bg="primary" data-bs-theme="primary" expand="lg">
     <LinkContainer to="/" >
       <Navbar.Brand>React application</Navbar.Brand>
     </LinkContainer>
