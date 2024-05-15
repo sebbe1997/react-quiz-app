@@ -7,7 +7,7 @@ export default function Quispage(){
     const location = useLocation();
     const amount = location.state.amount;
     const category = location.state.category;
-    const [questions, setQuestions] = useState({});
+    const [questions, setQuestions] = useState(null);
     const [currentQuestion, setcurrentQuestion] = useState(0);
     const [userAnswerList, setUserAnswerList] = useState([]);
    /*
@@ -16,14 +16,14 @@ export default function Quispage(){
                 https://rapidapi.com/lewispour1994/api/trivia-quiz-questions-api/
                 https://rapidapi.com/ExoWatts/api/trivia12 similar json structure. 
   */
-
+   
     useEffect(() =>{
-        
+       
         async function FetchData(){
             const baseUrl = `https://opentdb.com/api.php`;
-           
+            setQuestions(null);
             const service = new QuestionService(baseUrl);
-            if(Object.entries(questions).length === 0){
+            if(!ignore){
                 
                 const newq = await service.getQuestionsAsync(amount,"multiple",category);
                 
@@ -31,17 +31,19 @@ export default function Quispage(){
                 
             }
         }
-        
+        let ignore = false;
         FetchData();
+        return ()=>{
+            ignore = true;
+        }
         
         
        
 
-    },[])
+    },[category,amount])
   
-    console.log(questions);
    
-    
+    console.log(questions);
     return(<main className="container bg-light">
 
                   <Questions  setUseranslist = {setUserAnswerList} useAnswerList = {userAnswerList}

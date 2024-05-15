@@ -27,16 +27,19 @@ export default function Home(){
         const service = new QuestionService(baseUrl);
        
             const FetchData = async ()=>{
-                if(Object.entries(category).length === 0){
+                if(!ignore){
                     const categories = await service.getQuestionCategories();
                     console.log(categories);
                     setCategories(categories);
                 }
            }
-              
+           let ignore = false;   
            FetchData();
+           return()=>{
+            ignore = true;
+           }
            
-    },[category])
+    },[])
     console.log(category);
     /*IDEA! use a modal when play button is clicked to show settings before going to the quizpage?*/ 
     return(<main className="container m-auto p-5">
