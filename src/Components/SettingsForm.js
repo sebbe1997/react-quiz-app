@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { FormSelect,FormLabel,Form,Button, FormGroup, Modal} from "react-bootstrap";
 
 export default function SettingsForm(props){ 
@@ -15,7 +14,7 @@ export default function SettingsForm(props){
         
         props.onplayclick(e);
     }
-    const oncancel = () => {props.setShow(false);}
+    const oncancel = (e) => {props.setShow(false);}
    
     return (<Modal show = {props.show}>
             <Form className="text-center">
@@ -29,7 +28,7 @@ export default function SettingsForm(props){
                         <FormLabel className="form-label">Category</FormLabel>
                         <FormSelect className="form-control" name="category" id="category" >
                             
-                            {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                            {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                         </FormSelect>
                     </FormGroup>
                 </Modal.Body>

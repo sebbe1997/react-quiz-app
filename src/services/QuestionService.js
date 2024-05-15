@@ -17,7 +17,7 @@ export class QuestionService{
                 let data = response.json();
                 return data;
             }else{
-                console.log("transmission error!");
+                console.log(`transmission error! Status code ${response.status}`);
             }
        }
        catch(e){
@@ -37,16 +37,7 @@ export class QuestionService{
         const categoryUrl = "https://opentdb.com/api_category.php";
        return await this.#_myfetch(categoryUrl); 
     }
-    // async #_readItemsAsync(reqUrl,pageNr,flat,filter, pageSize) {
-    //     let url = `${reqUrl}?flat=${flat}&pageNr=${pageNr}&pageSize=${pageSize}`;;
-        
-    //     if(filter != null){
-    //         url += `&filter=${filter}`;
-    //     }
 
-    //     let res =  await this.#_myfetch(url,"GET",null);
-    //     return res;
-    // }
 
    async getQuestionsAsync(amount,type = "multiple",category = null){
     return this.#_getQuestionsAsync(this.Url,amount,type,category);

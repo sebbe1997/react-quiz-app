@@ -7,7 +7,10 @@ export default function AppRouter(){
     return(<Routes>
         <Route  path= "/" element={<Home/>}/>
         <Route path="/quizpage" element = {<Quispage/>}/>
+        <Route path="/quizpage/:amount" element = {<Quispage/>}/>
+
         <Route path="/quizpage/:amount/:category" element = {<Quispage/>}/>
+    
         <Route path="/aboutpage" element = {<About/>}/>
         </Routes>
     

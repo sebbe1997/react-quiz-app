@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import SettingsForm from "../Components/SettingsForm";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { QuestionService } from "../services/QuestionService";
 
 // look into react navigation from lessons
@@ -12,22 +12,31 @@ export default function Home(){
     
     const navigate = useNavigate(); 
     function OnPlayBtnClick(e){
-        const values = e.settings;
-        navigate(`/quizpage?amount=${values.questionAmount}&category=${values.category}`);
+        const {questionAmount,category} = e.settings;
+        
+        navigate(`/quizpage?amount=${questionAmount}&category=${category}`,
+        {
+            state: {
+              amount: questionAmount,
+              category: category,
+            }});
     }
 
     useEffect( ()=>{
         const baseUrl = "https://opentdb.com/api.php";
         const service = new QuestionService(baseUrl);
-        (async ()=>{
-            const categories = await service.getQuestionCategories();
-            
-            // console.log(categories);
-            setCategories(categories);
-        })()
-      
-      
-    },[])
+       
+            const FetchData = async ()=>{
+                if(Object.entries(category).length === 0){
+                    const categories = await service.getQuestionCategories();
+                    console.log(categories);
+                    setCategories(categories);
+                }
+           }
+              
+           FetchData();
+           
+    },[category])
     console.log(category);
     /*IDEA! use a modal when play button is clicked to show settings before going to the quizpage?*/ 
     return(<main className="container m-auto p-5">
