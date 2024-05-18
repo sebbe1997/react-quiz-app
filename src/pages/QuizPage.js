@@ -6,11 +6,33 @@ export default function Quispage(){
     const location = useLocation();
     const amount = location.state.amount;
     const category = location.state.category;
-    const [questions, setQuestions] = useState({});
+    const [questions, setQuestions] = useState([]);
     const [currentQuestion, setcurrentQuestion] = useState(0);
     const [userAnswerList, setUserAnswerList] = useState([]);
-   /*
-
+    // rename function to cleanobject?
+    // move to a utility class?
+    function cleanobject(questions){
+        const refinedQuestions = []
+        
+            for(const qs of questions){
+                const newquestionObj ={};
+               const {question,correct_answer,incorrect_answers} = qs; // obj destructuring
+               const newincorrect_answers = incorrect_answers.map(c =>
+                c.replaceAll("&quot;","\"").replaceAll("&#039;","'").replaceAll("&amp;","&")
+                );
+               newquestionObj.question = question.replaceAll("&quot;","\"")
+               .replaceAll("&#039;","'").replaceAll("&amp;","&");;
+               newquestionObj.correct_answer = correct_answer.replaceAll("&quot;","\"")
+               .replaceAll("&#039;","'").replaceAll("&amp;","&");
+               newquestionObj.incorrect_answers = [...newincorrect_answers,correct_answer];
+               refinedQuestions.push(newquestionObj); 
+            }
+           
+            console.log([...refinedQuestions]);
+            return refinedQuestions;
+    }
+    /*
+    
     Dont work, calls api to many times and gets status code 429?
     gets error in questionservice when Useeffect is called multiple times.
     maybe use   https://rapidapi.com/jayeshvijay649/api/quiz26
@@ -46,8 +68,8 @@ export default function Quispage(){
            
                 
                 const newq = await service.getQuestionsAsync(amount,"multiple",category);
-                
-                setQuestions(newq);
+               const cleanedQuestions = cleanobject(newq.results);    
+                setQuestions(cleanedQuestions);
                 
             
         }
@@ -59,7 +81,7 @@ export default function Quispage(){
     return(<main className="container bg-light">
                 <button className="" onClick={FetchData}>Get questions</button>
                   <Questions  setUseranslist = {setUserAnswerList} useAnswerList = {userAnswerList}
-                    result = {questions.results}
+                    result = {questions}
                      setnextquestion = {setcurrentQuestion}
                      currentquestion = {currentQuestion} />
     </main>)
