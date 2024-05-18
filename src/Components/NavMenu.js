@@ -5,7 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 export default function NavMenu(){
     return (<Navbar bg="primary" data-bs-theme="primary" expand="lg">
     <LinkContainer to="/" >
-      <Navbar.Brand>React application</Navbar.Brand>
+      <Navbar.Brand>Quiz Time</Navbar.Brand>
     </LinkContainer>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">

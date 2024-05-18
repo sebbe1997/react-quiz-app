@@ -29,7 +29,6 @@ export default function Home(){
             const FetchData = async ()=>{
                 if(!ignore){
                     const categories = await service.getQuestionCategories();
-                    console.log(categories);
                     setCategories(categories);
                 }
            }
@@ -40,7 +39,6 @@ export default function Home(){
            }
            
     },[])
-    console.log(category);
     /*IDEA! use a modal when play button is clicked to show settings before going to the quizpage?*/ 
     return(<main className="container m-auto p-5">
            <section className="row bg-light"> 
@@ -52,13 +50,14 @@ export default function Home(){
             <div className="col-md-auto p-4 bg-light border border-dark">
                 <h1 className="row fw-bold p-4">homepage!</h1>
                 
-                <button onClick={showModal} className="row m-5 p-4 btn btn-primary">Play</button>
+                <button onClick={showModal} className="row m-5 p-3 btn btn-primary">Play</button>
+                
                 <SettingsForm categories ={category.trivia_categories ? category.trivia_categories:[]}
                  show={show} setShow={setShow} onplayclick ={OnPlayBtnClick}/>
             </div>
             <div className="col-4 bg-light">
                 <h1 className="fw-bold text-center">information</h1>
-                <p className="text-center">Lorem loremasd asddvdf fgarvetba. farvr</p>
+                <p className="text-center">lorem ipsum</p>
             </div>
          
             </section>
