@@ -12,18 +12,22 @@ export default function Quispage(){
     // rename function to cleanobject?
     // move to a utility class?
     function cleanobject(questions){
+        
         const refinedQuestions = []
         
             for(const qs of questions){
                 const newquestionObj ={};
-               const {question,correct_answer,incorrect_answers} = qs; // obj destructuring
+               
+                const {question,correct_answer,incorrect_answers} = qs; // obj destructuring
                const newincorrect_answers = incorrect_answers.map(c =>
                 c.replaceAll("&quot;","\"").replaceAll("&#039;","'").replaceAll("&amp;","&")
+                .replaceAll("&ouml;","ö").replaceAll("&rsquo;","")
                 );
+
                newquestionObj.question = question.replaceAll("&quot;","\"")
-               .replaceAll("&#039;","'").replaceAll("&amp;","&");;
+               .replaceAll("&#039;","'").replaceAll("&amp;","&").replaceAll("&ouml;","ö").replaceAll("&rsquo;","");
                newquestionObj.correct_answer = correct_answer.replaceAll("&quot;","\"")
-               .replaceAll("&#039;","'").replaceAll("&amp;","&");
+               .replaceAll("&#039;","'").replaceAll("&amp;","&").replaceAll("&ouml;","ö").replaceAll("&rsquo;","");
                newquestionObj.incorrect_answers = [...newincorrect_answers,correct_answer];
                refinedQuestions.push(newquestionObj); 
             }
@@ -58,20 +62,13 @@ export default function Quispage(){
         return ()=>{
             ignore = true;
         }
-  */
-   
-   
-       
+  */   
         async function FetchData(e){
             const baseUrl = `https://opentdb.com/api.php`;
-            const service = new QuestionService(baseUrl);
-           
-                
-                const newq = await service.getQuestionsAsync(amount,"multiple",category);
-               const cleanedQuestions = cleanobject(newq.results);    
-                setQuestions(cleanedQuestions);
-                
-            
+            const service = new QuestionService(baseUrl);   
+            const newq = await service.getQuestionsAsync(amount,"multiple",category);
+            const cleanedQuestions = cleanobject(newq.results);    
+            setQuestions(cleanedQuestions);
         }
         
    
