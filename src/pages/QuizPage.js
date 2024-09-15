@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Questions from "../Components/Questions";
 import {QuestionService} from "../services/QuestionService.js";
 import { useLocation } from "react-router-dom";
+import { Button } from "react-bootstrap";
 export default function Quispage(){
     const location = useLocation();
     const amount = location.state.amount;
@@ -21,7 +22,7 @@ export default function Quispage(){
                 const {question,correct_answer,incorrect_answers} = qs; // obj destructuring
                const newincorrect_answers = incorrect_answers.map(c =>
                 c.replaceAll("&quot;","\"").replaceAll("&#039;","'").replaceAll("&amp;","&")
-                .replaceAll("&ouml;","ö").replaceAll("&rsquo;","")
+                .replaceAll("&ouml;","ö").replaceAll("&rsquo;","").replaceAll("&eacute;","").replaceAll("&amp;","&")
                 );
 
                newquestionObj.question = question.replaceAll("&quot;","\"")
@@ -29,7 +30,8 @@ export default function Quispage(){
                newquestionObj.correct_answer = correct_answer.replaceAll("&quot;","\"")
                .replaceAll("&#039;","'").replaceAll("&amp;","&").replaceAll("&ouml;","ö").replaceAll("&rsquo;","");
                newquestionObj.incorrect_answers = [...newincorrect_answers,correct_answer];
-               refinedQuestions.push(newquestionObj); 
+               refinedQuestions.push(newquestionObj);
+               
             }
            
             console.log([...refinedQuestions]);
@@ -76,7 +78,7 @@ export default function Quispage(){
    
    
     return(<main className="container bg-light">
-                <button className="" onClick={FetchData}>Get questions</button>
+                <Button className="" onClick={FetchData}>Get questions</Button>
                   <Questions  setUseranslist = {setUserAnswerList} useAnswerList = {userAnswerList}
                     result = {questions}
                      setnextquestion = {setcurrentQuestion}
